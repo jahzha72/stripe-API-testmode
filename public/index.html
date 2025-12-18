@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spotify Premium Plans</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: white;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      color: #ccc;
+    }
+
+    .benefits {
+      max-width: 700px;
+      margin: 0 auto 40px;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .benefits ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .benefits li {
+      margin-bottom: 10px;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #1db954;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      background: black;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Choose Your Spotify Premium Plan</h1>
+<p class="subtitle">
+  Enjoy uninterrupted music, offline listening, and high-quality audio with Spotify Premium.
+</p>
+
+<div class="benefits">
+  <h2>Key Benefits Across All Plans</h2>
+  <ul>
+    <li>🎵 No Ads – Listen without interruptions</li>
+    <li>📥 Offline Listening – Download music and podcasts</li>
+    <li>▶️ On-Demand Playback – Play any song, anytime</li>
+    <li>🔊 High-Quality Audio – Better sound quality</li>
+  </ul>
+</div>
+
+<div class="plans" id="plansContainer">
+  <!-- Plans loaded here -->
+</div>
+
+<script>
+  async function loadPlans() {
+    try {
+      const res = await fetch("/plans");
+      const plans = await res.json();
+
+      const container = document.getElementById("plansContainer");
+      container.innerHTML = "";
+
+      plans.map(plan => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+          <h2>${plan.name}</h2>
+          <p>${plan.description}</p>
+          <h3>₱${(plan.price / 100).toFixed(2)}</h3>
+          <button onclick="checkout('${plan.id}')">Choose Plan</button>
+        `;
+
+        container.appendChild(card);
+      });
+
+    } catch (error) {
+      console.error("Error loading plans:", error);
+    }
+  }
+
+  async function checkout(planId) {
+    try {
+      const res = await fetch("/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId })
+      });
+
+      const data = await res.json();
+      window.location.href = data.url;
+
+    } catch (error) {
+      alert("Checkout failed");
+    }
+  }
+
+  loadPlans();
+</script>
+
+</body>
+</html>
