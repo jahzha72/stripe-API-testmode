@@ -65,8 +65,9 @@ app.post("/create-checkout-session", async (req, res) => {
         }
       ],
       mode: "payment",
-      success_url: "http://localhost:3000/success.html",
-      cancel_url: "http://localhost:3000/cancel.html"
+      // server.js (Update mo itong part na ito)
+success_url: "http://localhost:3000/index.html?status=success",
+cancel_url: "http://localhost:3000/index.html?status=cancel"
     });
 
     res.json({
@@ -84,3 +85,4 @@ app.post("/create-checkout-session", async (req, res) => {
 app.listen(3000, () => {
   console.log("✅ Server running at http://localhost:3000");
 });
+
