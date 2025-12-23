@@ -1,68 +1,126 @@
-/* Global Styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  text-align: center;
-  padding: 20px;
-  background-color: #1db954;
-  color: white;
-}
-
-#plans-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 20px;
-  gap: 20px;
-}
-
-/* Card Styles */
-.plan-card {
-  background-color: white;
-  border-radius: 12px;
-  padding: 20px;
-  width: 250px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.plan-card h2 {
-  margin: 0 0 10px 0;
-}
-
-.plan-card p {
-  font-size: 14px;
-  color: #555;
-}
-
-.plan-card button {
-  margin-top: 15px;
-  padding: 10px;
-  background-color: #1db954;
-  border: none;
-  color: white;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.plan-card button:hover {
-  background-color: #14833b;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  #plans-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: url('https://www.ludwig-van.com/main/wp-content/uploads/sites/6/2023/01/Spotify.gif') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-  }
+    color: #fff;
 }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 18, 18, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: #1e1e1e;
+    padding: 40px 50px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    max-width: 400px;
+}
+
+h2 {
+    color: #1db954;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+p {
+    color: #f0f3ef;
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 12px 25px;
+    border-radius: 50px;
+    border: none;
+    background: #1db954;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin: 10px 5px;
+}
+
+button:hover {
+    background: #0a8f3c;
+    transform: scale(1.05); /* Requirement #19: Hover effect */
+}
+
+.hidden { display: none !important; }
+
+#plans-section {
+    text-align: center;
+    z-index: 1;
+    width: 90%;
+    max-width: 1000px;
+}
+
+.grid-container {
+    display: grid;
+    /* Gumamit ng minmax para pwedeng bumaba sa 180px ang width ng card bago sila mag-wrap */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+    gap: 10px; /* Binawasan ang gap para magdikit sila nang konti */
+    width: 100%;
+    max-width: 1100px; /* Para hindi masyadong kalat sa malalapad na monitor */
+    margin: 0 auto;
+    padding: 20px;
+    justify-items: center; /* Sinisiguro na laging nasa gitna ang cards */
+}
+
+.plan-card {
+    background: rgba(255, 255, 255, 0.144);
+    padding: 20px 10px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.3s;
+    
+    /* Responsive Width Logic */
+    width: 100%;           /* Sasakop sa available space ng grid column */
+    max-width: 230px;      /* Hindi lalampas sa 230px para hindi masyadong malaki */
+    min-width: 160px;      /* Hanggang dito lang siya pwedeng mag-compress/pumaliit */
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    box-sizing: border-box; /* Importante para hindi lumampas ang padding sa width */
+}
+
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 15px rgb(30, 255, 22);
+    
+}
+
+
+.alert {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    z-index: 1001;
+}
+.success { background: #1db954; color: white; }
+.cancel { background: #e91e63; color: white; }
